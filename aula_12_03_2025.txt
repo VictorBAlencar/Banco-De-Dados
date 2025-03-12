@@ -1,3 +1,4 @@
 teste
 
---comando SELECT 
+--comando SELECT
+--comando UPDATE
