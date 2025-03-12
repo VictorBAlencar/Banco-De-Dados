@@ -1,0 +1,7 @@
+git clone [URL] -> clonar o repositório no computador local
+cd ... ->  acessar pasta
+git status -> conferir status do arquivo
+git add -> adicionar/atualizar o arquivo criado
+git commit -m ""-> comitar com uma mensagem para historico 
+git push-> mandar para o github
+git pull -> puxar do GitHub na web para o computador local
