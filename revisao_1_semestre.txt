@@ -1,0 +1,25 @@
+SELECT * FROM medicos;
+
+SELECT nome, idade FROM medicos;
+
+SELECT * FROM medicos WHERE codm = 3;
+
+SELECT * FROM medicos WHERE idade > 30 AND especialidade = 'pediatria';
+
+SELECT * FROM medicos WHERE idade > 30 OR especialidade = 'pediatria';
+
+SELECT * FROM medicos WHERE codm BETWEEN 1 AND 3;
+
+DESCRIBE medicos;
+
+SELECT COUNT(*) FROM medicos;
+
+SELECT MIN(idade), nome FROM medicos GROUP BY idade, nome;
+
+SELECT AVG(idade) FROM medicos;
+
+SELECT SUM(idade) FROM medicos;
+
+SELECT DISTINCT especialidade FROM medicos;
+
+SELECT idade FROM medicos ORDER BY idade DESC;
