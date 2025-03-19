@@ -1,3 +1,5 @@
+USE clinica;
+
 SELECT * FROM medicos;
 
 SELECT nome, idade FROM medicos;
@@ -23,3 +25,45 @@ SELECT SUM(idade) FROM medicos;
 SELECT DISTINCT especialidade FROM medicos;
 
 SELECT idade FROM medicos ORDER BY idade DESC;
+
+SELECT * FROM medicos WHERE idade >= 20 AND idade <= 40;
+
+SELECT * FROM medicos WHERE idade BETWEEN 20 AND 40;
+
+SELECT * FROM medicos WHERE cidade IN ('Florianopolis','Joinville');
+
+SELECT * FROM medicos WHERE cidade NOT IN ('Florianopolis','Joinville');
+
+SELECT * FROM medicos WHERE nome LIKE 'j%';  /* % --> aceita qualquer letra */
+
+SELECT * FROM medicos WHERE nome LIKE '%o';
+
+SELECT * FROM medicos WHERE nome LIKE '%c%';
+
+SELECT * FROM medicos WHERE nome LIKE '____o%'; /*_ significa 1(uma) posição na palavra */
+
+SELECT * FROM medicos WHERE nome LIKE '%__o';
+
+-- JUNÇÕES
+
+SELECT * FROM medicos AS m, consultas AS c; -- produto cartesiano (todos com todos) / crossjoin
+
+SELECT * FROM medicos AS m, consultas AS c WHERE m.codm = c.codm;
+
+SELECT * FROM medicos AS m JOIN consultas AS c ON m.codm = c.codm;
+
+-- EXEMPLO
+
+SELECT * FROM medicos AS m, consultas AS c WHERE m.codm = c.codm AND especialidade IN ('ortopedia', 'pediatria');
+
+SELECT * 
+FROM medicos AS m 
+JOIN consultas AS c ON m.codm = c.codm 
+WHERE especialidade IN('ortopedia', 'pediatria');
+
+-- UNIAO
+
+SELECT nome, cpf FROM medicos -- 2 colunas
+UNION
+SELECT nome, cpf FROM funcionarios; -- 2 colunas
+-- UNION...
