@@ -1,0 +1,36 @@
+-- Liste todos os diretores e os filmes que eles dirigiram 
+
+SELECT * FROM directors AS d LEFT JOIN movies AS m ON d.id = m.director_id;
+
+-- Liste todos os filmes e seus tickets vendidos -- ATENÇÃO!
+
+SELECT * FROM tickets;
+
+SELECT * FROM movies AS m LEFT JOIN tickets AS t ON m.id = t.id;
+
+SELECT name AS nome_filme, COUNT(movie_id) AS qtd_ticket_vendidos FROM movies AS m LEFT JOIN tickets AS t ON m.id = t.movie_id GROUP BY name, movie_id; -- CORRETO
+
+SELECT name AS nome_filme, SUM(movie_id) AS qtd_ticket_vendidos FROM movies AS m LEFT JOIN tickets AS t ON m.id = t.movie_id GROUP BY name, movie_id; -- ERRADO
+
+-- Liste todos os filmes, seus diretores e os tickets vendidos -- ATENÇÃO ! 2 LEFT JOIN !
+
+SELECT COUNT(movie_id) AS qtd_ticket_vendidos, m.name AS nome_filme, d.name AS nome_diretor 
+FROM movies AS m 
+LEFT JOIN directors AS d ON m.director_id = d.id  -- 1 "tabela"
+LEFT JOIN tickets AS t ON m.id = t.movie_id -- 2 "tabela"
+GROUP BY movie_id, m.name, d.name;
+
+-- Liste todos os diretores, incluindo aqueles que não dirigiram nenhum filme
+
+SELECT d.name AS nome_diretor, m.name AS nome_filme FROM directors AS d LEFT JOIN movies AS m ON d.id = m.director_id;
+ 
+-- Liste todos os filmes, incluindo aqueles que não têm um diretor associado
+
+SELECT m.name AS nome_filme, d.name AS nome_diretor FROM movies AS m LEFT JOIN directors AS d ON m.director_id = d.id;
+
+-- Liste todos os filmes que têm tickets e seus diretores, incluindo os filmes sem tickets
+
+SELECT t.movie_id AS qtd_ticket_vendidos, m.name AS nome_filme, d.name AS nome_diretor 
+FROM movies AS m 
+LEFT JOIN directors AS d ON m.director_id = d.id  
+LEFT JOIN tickets AS t ON m.id = t.movie_id; 
