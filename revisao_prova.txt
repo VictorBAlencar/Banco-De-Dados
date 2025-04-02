@@ -1,0 +1,105 @@
+--  Contar o número total de clientes
+
+SELECT COUNT(*) AS qtd_clientes FROM clientes;
+SELECT * FROM clientes;
+
+-- Contar o número total de pedidos
+
+SELECT * FROM pedidos;
+SELECT COUNT(*) AS qtd_pedidos FROM pedidos;
+
+--  Calcular o valor total de todos os pedidos
+
+SELECT * FROM produtos;
+SELECT * FROM pedidos;
+
+SELECT pr.nome, pr.preco, pe.quantidade, (pr.preco * quantidade) AS valor_total FROM produtos AS pr INNER JOIN pedidos AS pe ON pr.id = pe.produto_id GROUP BY pr.nome, pr.preco, pe.quantidade;
+
+--  Calcular a média de preço dos produtos
+
+SELECT COUNT(id) AS qtd_produtos, AVG(preco) AS media_preco FROM produtos;  
+
+--  Listar todos os clientes e seus pedidos
+
+SELECT cl.nome AS Cliente, pr.nome AS Produto FROM clientes AS cl LEFT JOIN pedidos AS pe ON cl.id = pe.cliente_id LEFT JOIN produtos AS pr ON pe.produto_id = pr.id; -- left join : mostrar quem nao tem pedidos
+SELECT * FROM pedidos;
+
+--  Listar todos os pedidos e seus produtos, incluindo pedidos sem produtos
+
+SELECT pe.id AS Pedido, pe.quantidade AS Quantidade, pr.nome AS Produto FROM pedidos AS pe LEFT JOIN produtos AS pr ON pe.produto_id = pr.id;
+SELECT * FROM pedidos;
+
+--  Listar os produtos mais caros primeiro
+
+SELECT nome, preco FROM produtos ORDER BY preco DESC;
+
+--  Listar os produtos com menor estoque
+
+SELECT nome, estoque FROM produtos ORDER BY estoque ASC; -- LIMIT 3;
+
+--  Contar quantos pedidos foram feitos por cliente 
+
+SELECT cl.nome AS Nome_Cliente, COUNT(pe.id) AS Pedido FROM clientes AS cl RIGHT JOIN pedidos AS pe ON cl.id = pe.cliente_id GROUP BY nome, pe.id;
+SELECT * FROM pedidos;
+
+--  Contar quantos produtos diferentes foram vendidos
+
+SELECT DISTINCT count(pr.id) FROM produtos AS pr INNER JOIN pedidos AS pe ON 
+
+--  Mostrar os clientes que não realizaram pedidos
+
+
+
+--  Mostrar os produtos que nunca foram vendidos
+
+
+
+--  Contar o número de pedidos feitos por dia
+
+
+
+--  Listar os produtos mais vendidos
+
+
+
+--  Encontrar o cliente que mais fez pedidos
+
+
+
+--  Listar os pedidos e os clientes que os fizeram, incluindo pedidos sem clientes
+
+
+
+--  Listar os produtos e o total de vendas por produto
+
+
+
+--  Calcular a média de quantidade de produtos por pedido
+
+
+
+--  Listar os pedidos ordenados por data (mais recentes primeiro)
+
+
+
+--  Contar quantos clientes possuem telefone cadastrado
+
+
+
+--  Encontrar o cliente que gastou mais dinheiro em pedidos.
+
+
+
+-- Listar os 5 produtos mais vendidos.
+
+
+
+-- Listar os clientes que já fizeram pedidos e o número de pedidos de cada um.
+
+
+
+-- Encontrar a data com mais pedidos realizados
+
+
+
+-- Calcular a média de valor gasto por pedido
