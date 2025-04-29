@@ -1,0 +1,297 @@
+CREATE DATABASE trabalhoBiblioteca;
+DROP DATABASE trabalhobiblioteca;
+USE trabalhoBiblioteca;
+
+CREATE TABLE Livros
+(
+id INT UNIQUE PRIMARY KEY NOT NULL,
+autor_id INT NOT NULL ,
+titulo VARCHAR(200) NOT NULL,
+ano_publicacao SMALLINT NOT NULL, -- YEAR nao suporta antes de 1901 :(
+genero VARCHAR(100) NOT NULL,
+descricao TEXT,
+disponibilidade BOOLEAN NOT NULL,
+idioma VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Autores
+(
+id INT UNIQUE PRIMARY KEY NOT NULL,
+nome VARCHAR(100) NOT NULL,
+nacionalidade VARCHAR(100) NOT NULL,
+data_nascimento DATE NOT NULL,
+premios VARCHAR(250)
+);
+
+CREATE TABLE Usuarios
+(
+id INT UNIQUE PRIMARY KEY NOT NULL,
+nome VARCHAR(100) NOT NULL,
+email VARCHAR(254) UNIQUE,
+telefone VARCHAR(20) UNIQUE,
+data_cadastro DATE NOT NULL,
+curso VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Emprestimos
+(
+id INT UNIQUE PRIMARY KEY NOT NULL,
+usuario_id INT NOT NULL,
+livro_id INT NOT NULL,
+data_emprestimo DATE NOT NULL,
+data_devolucao_prevista DATE NOT NULL,
+data_devolucao_real DATE,
+status_emprestimo VARCHAR(50) NOT NULL,
+multa DECIMAL(5,2)
+);
+
+CREATE TABLE Reservas
+(
+id INT UNIQUE PRIMARY KEY NOT NULL,
+usuario_id INT NOT NULL,
+livro_id INT NOT NULL,
+data_reserva DATE NOT NULL,
+status_reserva VARCHAR(50) NOT NULL,
+data_cancelamento DATE
+);
+
+ALTER TABLE Livros
+ADD CONSTRAINT fk_livros_autor FOREIGN KEY (autor_id)
+REFERENCES Autores(id);
+
+ALTER TABLE Emprestimos
+ADD CONSTRAINT fk_emprestimos_usuario FOREIGN KEY (usuario_id)
+REFERENCES Usuarios(id);
+
+ALTER TABLE Emprestimos
+ADD CONSTRAINT fk_emprestimos_livro FOREIGN KEY (livro_id)
+REFERENCES Livros(id);
+
+ALTER TABLE Reservas
+ADD CONSTRAINT fk_reservas_usuario FOREIGN KEY (usuario_id)
+REFERENCES Usuarios(id);
+
+ALTER TABLE Reservas
+ADD CONSTRAINT fk_reservas_livro FOREIGN KEY (livro_id)
+REFERENCES Livros(id);
+
+-- INSERTS SEM AUTO_INCREMENT(DEFININDO OS ids MANUALMENTE)
+
+INSERT INTO Autores (id, nome, nacionalidade, data_nascimento, premios) VALUES
+(1, 'Gabriel García Márquez', 'Colombiano', '1927-03-06', 'Prêmio Nobel de Literatura'),
+(2, 'George Orwell', 'Britânico', '1903-06-25', 'Prometheus Hall of Fame Award'),
+(3, 'Jane Austen', 'Britânica', '1775-12-16', 'Reconhecimento póstumo pela crítica literária'),
+(4, 'J.K. Rowling', 'Britânica', '1965-07-31', 'British Book Awards'),
+(5, 'Stephen King', 'Americano', '1947-09-21', 'National Book Award'),
+(6, 'Ernest Hemingway', 'Americano', '1899-07-21', 'Prêmio Nobel de Literatura'),
+(7, 'Haruki Murakami', 'Japonês', '1949-01-12', 'Jerusalem Prize'),
+(8, 'José Saramago', 'Português', '1922-11-16', 'Prêmio Nobel de Literatura'),
+(9, 'Machado de Assis', 'Brasileiro', '1839-06-21', 'Fundador da Academia Brasileira de Letras'),
+(10, 'Clarice Lispector', 'Brasileira', '1920-12-10', 'Prêmio Graça Aranha'),
+(11, 'Franz Kafka', 'Tcheco', '1883-07-03', 'Reconhecimento póstumo'),
+(12, 'Italo Calvino', 'Italiano', '1923-10-15', 'Bagutta Prize'),
+(13, 'Virginia Woolf', 'Britânica', '1882-01-25', 'Reconhecimento póstumo'),
+(14, 'Fyodor Dostoevsky', 'Russo', '1821-11-11', 'Reconhecimento póstumo'),
+(15, 'Leo Tolstoy', 'Russo', '1828-09-09', 'Indicado ao Nobel de Literatura'),
+(16, 'Jorge Luis Borges', 'Argentino', '1899-08-24', 'Prix Formentor'),
+(17, 'Margaret Atwood', 'Canadense', '1939-11-18', 'Booker Prize'),
+(18, 'Neil Gaiman', 'Britânico', '1960-11-10', 'Hugo Award, Nebula Award'),
+(19, 'Albert Camus', 'Francês', '1913-11-07', 'Prêmio Nobel de Literatura'),
+(20, 'Hermann Hesse', 'Alemão', '1877-07-02', 'Prêmio Nobel de Literatura'),
+(21, 'Dan Brown', 'Americano', '1964-06-22', 'Book Sense Book of the Year'),
+(22, 'Paulo Coelho', 'Brasileiro', '1947-08-24', 'Chevalier de l\'Ordre des Arts et des Lettres'),
+(23, 'Antoine de Saint-Exupéry', 'Francês', '1900-06-29', 'Grand Prix du roman de l\'Académie française'),
+(24, 'Mark Twain', 'Americano', '1835-11-30', 'Mark Twain Prize (póstumo)'),
+(25, 'Agatha Christie', 'Britânica', '1890-09-15', 'Grand Master Award'),
+(26, 'James Joyce', 'Irlandês', '1882-02-02', 'Reconhecimento póstumo'),
+(27, 'Marcel Proust', 'Francês', '1871-07-10', 'Prix Goncourt'),
+(28, 'Ray Bradbury', 'Americano', '1920-08-22', 'Pulitzer Prize Special Citation'),
+(29, 'Isaac Asimov', 'Americano', '1920-01-02', 'Hugo Award'),
+(30, 'Aldous Huxley', 'Britânico', '1894-07-26', 'American Academy of Arts and Letters'),
+(31, 'J.R.R. Tolkien', 'Britânico', '1892-01-03', 'International Fantasy Award'),
+(32, 'George R.R. Martin', 'Americano', '1948-09-20', 'Hugo Award, Nebula Award'),
+(33, 'José de Alencar', 'Brasileiro', '1829-05-01', 'Reconhecimento nacional'),
+(34, 'Graciliano Ramos', 'Brasileiro', '1892-10-27', 'Prêmio da Fundação William Faulkner'),
+(35, 'Raquel de Queiroz', 'Brasileira', '1910-11-17', 'Prêmio Camões'),
+(36, 'Lygia Fagundes Telles', 'Brasileira', '1923-04-19', 'Prêmio Camões'),
+(37, 'João Guimarães Rosa', 'Brasileiro', '1908-06-27', 'Prêmio Machado de Assis'),
+(38, 'Carlos Drummond de Andrade', 'Brasileiro', '1902-10-31', 'Prêmio Jabuti'),
+(39, 'Mario Vargas Llosa', 'Peruano', '1936-03-28', 'Prêmio Nobel de Literatura'),
+(40, 'Chinua Achebe', 'Nigeriano', '1930-11-16', 'Man Booker International Prize');
+
+INSERT INTO Livros (id, titulo, autor_id, ano_publicacao, genero, descricao, disponibilidade, idioma) VALUES
+(1, 'Cem Anos de Solidão', 1, 1967, 'Romance', 'A história da família Buendía na fictícia Macondo.', TRUE, 'Espanhol'),
+(2, '1984', 2, 1949, 'Distopia', 'Um futuro totalitário onde tudo é controlado pelo Grande Irmão.', TRUE, 'Inglês'),
+(3, 'Orgulho e Preconceito', 3, 1813, 'Romance', 'Relacionamentos e convenções sociais na Inglaterra georgiana.', TRUE, 'Inglês'),
+(4, 'Harry Potter e a Pedra Filosofal', 4, 1997, 'Fantasia', 'O início da jornada do jovem bruxo Harry Potter.', TRUE, 'Inglês'),
+(5, 'O Iluminado', 5, 1977, 'Terror', 'Um hotel assombrado leva um homem à loucura.', FALSE, 'Inglês'),
+(6, 'O Velho e o Mar', 6, 1952, 'Drama', 'Um velho pescador enfrenta um enorme marlim.', TRUE, 'Inglês'),
+(7, 'Kafka à Beira-Mar', 7, 2002, 'Ficção', 'Um garoto em fuga e um velho que fala com gatos.', TRUE, 'Japonês'),
+(8, 'Ensaio sobre a Cegueira', 8, 1995, 'Ficção', 'Uma epidemia de cegueira afeta uma cidade inteira.', FALSE, 'Português'),
+(9, 'Dom Casmurro', 9, 1899, 'Romance', 'Bentinho e Capitu em uma história de ciúmes e ambiguidade.', TRUE, 'Português'),
+(10, 'A Hora da Estrela', 10, 1977, 'Drama', 'A trajetória de Macabéa, uma jovem nordestina no Rio.', TRUE, 'Português'),
+(11, 'A Metamorfose', 11, 1915, 'Ficção', 'Um homem acorda transformado em inseto.', TRUE, 'Alemão'),
+(12, 'Se um Viajante numa Noite de Inverno', 12, 1979, 'Pós-modernismo', 'Um livro sobre ler um livro que nunca termina.', TRUE, 'Italiano'),
+(13, 'Mrs. Dalloway', 13, 1925, 'Ficção', 'Um dia na vida de uma mulher em Londres.', FALSE, 'Inglês'),
+(14, 'Crime e Castigo', 14, 1866, 'Romance psicológico', 'Um jovem comete assassinato e enfrenta as consequências.', TRUE, 'Russo'),
+(15, 'Guerra e Paz', 15, 1869, 'Histórico', 'A vida aristocrática russa durante a invasão napoleônica.', FALSE, 'Russo'),
+(16, 'Ficções', 16, 1944, 'Contos', 'Contos filosóficos e fantásticos.', TRUE, 'Espanhol'),
+(17, 'O Conto da Aia', 17, 1985, 'Distopia', 'Uma sociedade teocrática subjuga mulheres.', TRUE, 'Inglês'),
+(18, 'Deuses Americanos', 18, 2001, 'Fantasia', 'Deuses antigos e modernos lutam pela relevância.', TRUE, 'Inglês'),
+(19, 'O Estrangeiro', 19, 1942, 'Existencialismo', 'Um homem indiferente à vida comete um assassinato.', TRUE, 'Francês'),
+(20, 'Sidarta', 20, 1922, 'Filosofia', 'A busca espiritual de um jovem na Índia antiga.', TRUE, 'Alemão'),
+(21, 'O Código Da Vinci', 21, 2003, 'Suspense', 'Um simbologista desvenda segredos do cristianismo.', TRUE, 'Inglês'),
+(22, 'O Alquimista', 22, 1988, 'Fábula', 'Um pastor busca um tesouro e encontra sabedoria.', TRUE, 'Português'),
+(23, 'O Pequeno Príncipe', 23, 1943, 'Fábula', 'Um piloto encontra um menino de outro planeta.', TRUE, 'Francês'),
+(24, 'As Aventuras de Tom Sawyer', 24, 1876, 'Infantojuvenil', 'Travessuras de um garoto às margens do Mississippi.', TRUE, 'Inglês'),
+(25, 'Assassinato no Expresso Oriente', 25, 1934, 'Mistério', 'Hercule Poirot investiga um crime num trem.', TRUE, 'Inglês'),
+(26, 'Ulisses', 26, 1922, 'Modernismo', 'Um dia na vida de Leopold Bloom em Dublin.', TRUE, 'Inglês'),
+(27, 'Em Busca do Tempo Perdido', 27, 1913, 'Modernismo', 'Uma exploração da memória e do tempo.', TRUE, 'Francês'),
+(28, 'Fahrenheit 451', 28, 1953, 'Distopia', 'Um mundo onde livros são proibidos e queimados.', TRUE, 'Inglês'),
+(29, 'Fundação', 29, 1951, 'Ficção científica', 'Um matemático prevê a queda do Império Galáctico.', TRUE, 'Inglês'),
+(30, 'Admirável Mundo Novo', 30, 1932, 'Distopia', 'Uma sociedade tecnocrata onde todos são programados.', TRUE, 'Inglês'),
+(31, 'O Senhor dos Anéis: A Sociedade do Anel', 31, 1954, 'Fantasia épica', 'A jornada para destruir o Anel.', TRUE, 'Inglês'),
+(32, 'A Guerra dos Tronos', 32, 1996, 'Fantasia', 'Reinos disputam o controle de Westeros.', TRUE, 'Inglês'),
+(33, 'Iracema', 33, 1865, 'Romance indianista', 'A lenda da fundação do Ceará.', TRUE, 'Português'),
+(34, 'Vidas Secas', 34, 1938, 'Realismo', 'Uma família de retirantes no sertão nordestino.', TRUE, 'Português'),
+(35, 'O Quinze', 35, 1930, 'Romance', 'A seca de 1915 no Ceará e seus impactos.', TRUE, 'Português'),
+(36, 'As Meninas', 36, 1973, 'Feminismo', 'Três jovens vivem em meio à ditadura militar.', TRUE, 'Português'),
+(37, 'Grande Sertão: Veredas', 37, 1956, 'Romance', 'O sertão e os dilemas de Riobaldo.', TRUE, 'Português'),
+(38, 'Alguma Poesia', 38, 1930, 'Poesia', 'Primeira coletânea de poemas de Drummond.', TRUE, 'Português'),
+(39, 'A Cidade e os Cães', 39, 1963, 'Drama militar', 'Violência e repressão em uma escola militar.', TRUE, 'Espanhol'),
+(40, 'Tudo se Desfaz', 40, 1958, 'Romance', 'O choque entre tradição e modernidade na Nigéria.', TRUE, 'Inglês');
+
+
+INSERT INTO Usuarios (id, nome, email, telefone, data_cadastro, curso) VALUES
+(1, 'Ana Souza', 'ana.souza@email.com', '11987654321', '2023-01-10', 'Engenharia Civil'),
+(2, 'Bruno Lima', 'bruno.lima@email.com', '11986543210', '2023-01-15', 'Direito'),
+(3, 'Carla Mendes', 'carla.mendes@email.com', '11985432109', '2023-01-20', 'Psicologia'),
+(4, 'Diego Ramos', 'diego.ramos@email.com', '11984321098', '2023-01-25', 'Administração'),
+(5, 'Eduarda Nunes', 'eduarda.nunes@email.com', '11983210987', '2023-01-28', 'Medicina'),
+(6, 'Felipe Araújo', 'felipe.araujo@email.com', '11982109876', '2023-02-02', 'Engenharia da Computação'),
+(7, 'Gabriela Torres', 'gabriela.torres@email.com', '11981098765', '2023-02-05', 'Publicidade'),
+(8, 'Henrique Silva', 'henrique.silva@email.com', '11980987654', '2023-02-10', 'Física'),
+(9, 'Isabela Martins', 'isabela.martins@email.com', '11979876543', '2023-02-13', 'Biologia'),
+(10, 'João Pereira', 'joao.pereira@email.com', '11978765432', '2023-02-15', 'Arquitetura'),
+(11, 'Karina Dias', 'karina.dias@email.com', '11977654321', '2023-02-20', 'Design Gráfico'),
+(12, 'Lucas Almeida', 'lucas.almeida@email.com', '11976543210', '2023-02-22', 'História'),
+(13, 'Marina Rocha', 'marina.rocha@email.com', '11975432109', '2023-02-25', 'Engenharia Elétrica'),
+(14, 'Natália Faria', 'natalia.faria@email.com', '11974321098', '2023-03-01', 'Matemática'),
+(15, 'Otávio Gomes', 'otavio.gomes@email.com', '11973210987', '2023-03-03', 'Sociologia'),
+(16, 'Patrícia Leal', 'patricia.leal@email.com', '11972109876', '2023-03-05', 'Engenharia Química'),
+(17, 'Rafael Correia', 'rafael.correia@email.com', '11971098765', '2023-03-08', 'Enfermagem'),
+(18, 'Sandra Teixeira', 'sandra.teixeira@email.com', '11970987654', '2023-03-10', 'Letras'),
+(19, 'Tiago Barros', 'tiago.barros@email.com', '11969876543', '2023-03-15', 'Jornalismo'),
+(20, 'Vanessa Castro', 'vanessa.castro@email.com', '11968765432', '2023-03-17', 'Geografia'),
+(21, 'Wesley Prado', 'wesley.prado@email.com', '11967654321', '2023-03-20', 'Ciência da Computação'),
+(22, 'Yasmin Duarte', 'yasmin.duarte@email.com', '11966543210', '2023-03-22', 'Odontologia'),
+(23, 'Zeca Brito', 'zeca.brito@email.com', '11965432109', '2023-03-25', 'Educação Física'),
+(24, 'Amanda Lopes', 'amanda.lopes@email.com', '11964321098', '2023-03-30', 'Engenharia Mecânica'),
+(25, 'Beatriz Pires', 'beatriz.pires@email.com', '11963210987', '2023-04-01', 'Relações Internacionais'),
+(26, 'Caio Freitas', 'caio.freitas@email.com', '11962109876', '2023-04-05', 'Engenharia de Produção'),
+(27, 'Daniela Goulart', 'daniela.goulart@email.com', '11961098765', '2023-04-07', 'Serviço Social'),
+(28, 'Eduardo Viana', 'eduardo.viana@email.com', '11960987654', '2023-04-09', 'Agronomia'),
+(29, 'Fernanda Antunes', 'fernanda.antunes@email.com', '11959876543', '2023-04-12', 'Tecnologia da Informação'),
+(30, 'Gustavo Monteiro', 'gustavo.monteiro@email.com', '11958765432', '2023-04-15', 'Química'),
+(31, 'Helena Cardoso', 'helena.cardoso@email.com', '11957654321', '2023-04-17', 'Pedagogia'),
+(32, 'Igor Vieira', 'igor.vieira@email.com', '11956543210', '2023-04-19', 'Engenharia Ambiental'),
+(33, 'Juliana Reis', 'juliana.reis@email.com', '11955432109', '2023-04-22', 'Filosofia'),
+(34, 'Leonardo Sampaio', 'leonardo.sampaio@email.com', '11954321098', '2023-04-24', 'Teatro'),
+(35, 'Manuela Braga', 'manuela.braga@email.com', '11953210987', '2023-04-26', 'Artes Visuais'),
+(36, 'Nicolas Costa', 'nicolas.costa@email.com', '11952109876', '2023-04-28', 'Biomedicina'),
+(37, 'Olívia Bernardes', 'olivia.bernardes@email.com', '11951098765', '2023-04-30', 'Moda'),
+-- (38, 'Pedro Lima', 'pedro.lima@email.com', '11950987654', '2023-05-01', 'Economia'),
+-- (39, 'Quésia Martins', 'quesia.martins@email.com', '11949876543', '2023-05-03', 'Arqueologia'),
+-- (40, 'Rogério Dutra', 'rogerio.dutra@email.com', '11948765432', '2023-05-05', 'Engenharia de Software'),
+
+-- EXTRAS
+
+(38, 'Victor Borges de Alencar', 'victor.borges.de.alencar@email.com', '11948385432', '2023-05-08', 'Ciência da Computação'),
+(39, 'Walter Aires de Alencar Filho', 'walter.aires.de.alencar.filho@email.com', '11976083210', '2023-05-21', 'Medicina'),
+(40, 'Julieta Borges de Alencar', 'julieta.borges.de.alencar@email.com', '11976074210', '2023-06-08', 'História');
+
+
+INSERT INTO Emprestimos (id, usuario_id, livro_id, data_emprestimo, data_devolucao_prevista, data_devolucao_real, status_emprestimo, multa) VALUES
+(1, 1, 1, '2024-03-01', '2024-03-15', '2024-03-14', 'devolvido', 0.00),
+(2, 2, 2, '2024-03-05', '2024-03-19', '2024-03-21', 'atrasado', 5.00),
+(3, 3, 3, '2024-03-08', '2024-03-22', '2024-03-22', 'devolvido', 0.00),
+(4, 4, 4, '2024-03-10', '2024-03-24', NULL, 'em andamento', 0.00),
+(5, 5, 5, '2024-03-11', '2024-03-25', '2024-03-30', 'atrasado', 10.00),
+(6, 6, 6, '2024-03-13', '2024-03-27', '2024-03-26', 'devolvido', 0.00),
+(7, 7, 7, '2024-03-15', '2024-03-29', NULL, 'em andamento', 0.00),
+(8, 8, 8, '2024-03-18', '2024-04-01', '2024-04-03', 'atrasado', 4.00),
+(9, 9, 9, '2024-03-20', '2024-04-03', '2024-04-02', 'devolvido', 0.00),
+(10, 10, 10, '2024-03-22', '2024-04-05', NULL, 'em andamento', 0.00),
+(11, 11, 11, '2024-03-23', '2024-04-06', '2024-04-05', 'devolvido', 0.00),
+(12, 12, 12, '2024-03-24', '2024-04-07', '2024-04-10', 'atrasado', 3.00),
+(13, 13, 13, '2024-03-25', '2024-04-08', NULL, 'em andamento', 0.00),
+(14, 14, 14, '2024-03-26', '2024-04-09', '2024-04-08', 'devolvido', 0.00),
+(15, 15, 15, '2024-03-27', '2024-04-10', '2024-04-13', 'atrasado', 6.00),
+(16, 16, 16, '2024-03-28', '2024-04-11', NULL, 'em andamento', 0.00),
+(17, 17, 17, '2024-03-29', '2024-04-12', '2024-04-12', 'devolvido', 0.00),
+(18, 18, 18, '2024-03-30', '2024-04-13', '2024-04-14', 'atrasado', 2.00),
+(19, 19, 19, '2024-03-31', '2024-04-14', NULL, 'em andamento', 0.00),
+(20, 20, 20, '2024-04-01', '2024-04-15', '2024-04-17', 'atrasado', 4.50),
+(21, 21, 21, '2024-04-02', '2024-04-16', '2024-04-15', 'devolvido', 0.00),
+(22, 22, 22, '2024-04-03', '2024-04-17', NULL, 'em andamento', 0.00),
+(23, 23, 23, '2024-04-04', '2024-04-18', '2024-04-20', 'atrasado', 3.50),
+(24, 24, 24, '2024-04-05', '2024-04-19', '2024-04-19', 'devolvido', 0.00),
+(25, 25, 25, '2024-04-06', '2024-04-20', '2024-04-21', 'atrasado', 2.00),
+(26, 26, 26, '2024-04-07', '2024-04-21', NULL, 'em andamento', 0.00),
+(27, 27, 27, '2024-04-08', '2024-04-22', '2024-04-22', 'devolvido', 0.00),
+(28, 28, 28, '2024-04-09', '2024-04-23', '2024-04-26', 'atrasado', 6.00),
+(29, 29, 29, '2024-04-10', '2024-04-24', NULL, 'em andamento', 0.00),
+(30, 30, 30, '2024-04-11', '2024-04-25', '2024-04-25', 'devolvido', 0.00),
+(31, 31, 31, '2024-04-12', '2024-04-26', '2024-04-29', 'atrasado', 3.00),
+(32, 32, 32, '2024-04-13', '2024-04-27', NULL, 'em andamento', 0.00),
+(33, 33, 33, '2024-04-14', '2024-04-28', '2024-04-27', 'devolvido', 0.00),
+(34, 34, 34, '2024-04-15', '2024-04-29', '2024-05-01', 'atrasado', 4.00),
+(35, 35, 35, '2024-04-16', '2024-04-30', NULL, 'em andamento', 0.00),
+(36, 36, 36, '2024-04-17', '2024-05-01', '2024-05-02', 'atrasado', 1.50),
+(37, 37, 37, '2024-04-18', '2024-05-02', NULL, 'em andamento', 0.00),
+(38, 38, 38, '2024-04-19', '2024-05-03', '2024-05-03', 'devolvido', 0.00),
+(39, 39, 39, '2024-04-20', '2024-05-04', NULL, 'em andamento', 0.00),
+(40, 40, 40, '2024-04-21', '2024-05-05', NULL, 'em andamento', 0.00);
+
+
+INSERT INTO Reservas (id, usuario_id, livro_id, data_reserva, status_reserva, data_cancelamento) VALUES
+(1, 1, 5, '2024-04-01', 'concluída', NULL),
+(2, 2, 6, '2024-04-02', 'cancelada', '2024-04-03'),
+(3, 3, 7, '2024-04-03', 'ativa', NULL),
+(4, 4, 8, '2024-04-04', 'concluída', NULL),
+(5, 5, 9, '2024-04-05', 'cancelada', '2024-04-06'),
+(6, 6, 10, '2024-04-06', 'ativa', NULL),
+(7, 7, 11, '2024-04-07', 'concluída', NULL),
+(8, 8, 12, '2024-04-08', 'ativa', NULL),
+(9, 9, 13, '2024-04-09', 'cancelada', '2024-04-10'),
+(10, 10, 14, '2024-04-10', 'concluída', NULL),
+(11, 11, 15, '2024-04-11', 'ativa', NULL),
+(12, 12, 16, '2024-04-12', 'ativa', NULL),
+(13, 13, 17, '2024-04-13', 'cancelada', '2024-04-14'),
+(14, 14, 18, '2024-04-14', 'concluída', NULL),
+(15, 15, 19, '2024-04-15', 'ativa', NULL),
+(16, 16, 20, '2024-04-16', 'cancelada', '2024-04-17'),
+(17, 17, 21, '2024-04-17', 'concluída', NULL),
+(18, 18, 22, '2024-04-18', 'ativa', NULL),
+(19, 19, 23, '2024-04-19', 'ativa', NULL),
+(20, 20, 24, '2024-04-20', 'cancelada', '2024-04-21'),
+(21, 21, 25, '2024-04-21', 'concluída', NULL),
+(22, 22, 26, '2024-04-22', 'ativa', NULL),
+(23, 23, 27, '2024-04-23', 'cancelada', '2024-04-24'),
+(24, 24, 28, '2024-04-24', 'concluída', NULL),
+(25, 25, 29, '2024-04-25', 'ativa', NULL),
+(26, 26, 30, '2024-04-26', 'ativa', NULL),
+(27, 27, 31, '2024-04-27', 'cancelada', '2024-04-28'),
+(28, 28, 32, '2024-04-28', 'concluída', NULL),
+(29, 29, 33, '2024-04-29', 'ativa', NULL),
+(30, 30, 34, '2024-04-30', 'cancelada', '2024-05-01'),
+(31, 31, 35, '2024-05-01', 'concluída', NULL),
+(32, 32, 36, '2024-05-02', 'ativa', NULL),
+(33, 33, 37, '2024-05-03', 'ativa', NULL),
+(34, 34, 38, '2024-05-04', 'cancelada', '2024-05-05'),
+(35, 35, 39, '2024-05-05', 'concluída', NULL),
+(36, 36, 40, '2024-05-06', 'ativa', NULL),
+(37, 37, 1, '2024-05-07', 'ativa', NULL),
+(38, 38, 2, '2024-05-08', 'cancelada', '2024-05-09'),
+(39, 39, 3, '2024-05-09', 'concluída', NULL),
+(40, 40, 4, '2024-05-10', 'ativa', NULL);
