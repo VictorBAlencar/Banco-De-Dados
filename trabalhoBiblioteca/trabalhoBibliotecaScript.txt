@@ -249,10 +249,17 @@ INSERT INTO Emprestimos (id, usuario_id, livro_id, data_emprestimo, data_devoluc
 (35, 35, 35, '2024-04-16', '2024-04-30', NULL, 'em andamento', 0.00),
 (36, 36, 36, '2024-04-17', '2024-05-01', '2024-05-02', 'atrasado', 1.50),
 (37, 37, 37, '2024-04-18', '2024-05-02', NULL, 'em andamento', 0.00),
+
+-- Parte 1
+
 (38, 38, 38, '2024-04-19', '2024-05-03', '2024-05-03', 'devolvido', 0.00),
 (39, 39, 39, '2024-04-20', '2024-05-04', NULL, 'em andamento', 0.00),
 (40, 40, 40, '2024-04-21', '2024-05-05', NULL, 'em andamento', 0.00);
 
+-- Parte 2
+(41, 38, 28, '2024-03-18', '2024-04-02', NULL, 'devolvido', 0.00),
+(42, 39, 19, '2024-03-29', '2024-04-03', NULL, 'devolvido', 0.00),
+(43, 40, 30, '2024-03-20', '2024-04-04', NULL, 'devolvido', 0.00);
 
 INSERT INTO Reservas (id, usuario_id, livro_id, data_reserva, status_reserva, data_cancelamento) VALUES
 (1, 1, 5, '2024-04-01', 'concluída', NULL),
@@ -292,7 +299,15 @@ INSERT INTO Reservas (id, usuario_id, livro_id, data_reserva, status_reserva, da
 (35, 35, 39, '2024-05-05', 'concluída', NULL),
 (36, 36, 40, '2024-05-06', 'ativa', NULL),
 (37, 37, 1, '2024-05-07', 'ativa', NULL),
+
+-- Parte 1
+
 (38, 38, 2, '2024-05-08', 'cancelada', '2024-05-09'),
 (39, 39, 3, '2024-05-09', 'concluída', NULL),
 (40, 40, 4, '2024-05-10', 'ativa', NULL);
 
+-- Parte 2
+
+(41, 38, 6, '2024-06-08', 'cancelada', '2024-06-10'),
+(42, 39, 9, '2024-06-11', 'concluída', NULL),
+(43, 40, 10, '2024-06-20', 'concluída', NULL);
