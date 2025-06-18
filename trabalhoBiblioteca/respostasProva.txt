@@ -1,0 +1,48 @@
+-- 1- Para cada autor, exiba o total de livros cadastrados e quantos estão disponíveis atualmente. Mostre apenas os autores com mais de 1 livro no sistema.
+ 
+USE trabalhoBiblioteca;
+ 
+SELECT a.nome, COUNT(a.id) AS qtd_livros_por_autor, l.disponibilidade FROM autores AS a
+JOIN livros AS l
+ON a.id = l.autor_id
+GROUP BY a.id, l.disponibilidade, a.nome
+HAVING qtd_livros_por_autor > 1; 
+
+ -- 2- Liste o nome dos usuários e a quantidade de livros que cada um já pegou emprestado. 
+ -- Mostre apenas os usuários que já realizaram pelo menos 2 empréstimos, ordenando do que mais emprestou para o que menos emprestou.
+ 
+SELECT u.nome, COUNT(e.usuario_id) AS qtd_emprestimos FROM usuarios AS u
+JOIN emprestimos AS e
+ON u.id = e.usuario_id
+GROUP BY u.nome, e.usuario_id
+HAVING qtd_emprestimos >= 2
+ORDER BY qtd_emprestimos DESC;
+ 
+ 
+ -- 3- Classifique os usuários como "Alta", "Média" ou "Baixa" atividade com base na quantidade de empréstimos:
+ 
+ SELECT u.nome,
+	CASE
+		WHEN COUNT(e.usuario_id) < 5 THEN "Baixa"
+        WHEN COUNT(e.usuario_id) >= 5 AND COUNT(e.usuario_id) <= 9 THEN "Média"
+        WHEN COUNT(e.usuario_id) >= 10 THEN "Alta"
+	END AS Atividade
+FROM usuarios AS u
+JOIN emprestimos AS e
+ON u.id = e.usuario_id
+GROUP BY u.nome;
+ 
+ 
+ -- 4- Mostre quantos usuários se cadastraram em cada mês. 
+ 
+SELECT MONTH(data_cadastro), YEAR(data_cadastro), COUNT(id)
+FROM usuarios
+GROUP BY MONTH(data_cadastro), YEAR(data_cadastro);
+ 
+ -- 5- Mostre os usuários que mais pegaram livros emprestados, juntamente com o total de empréstimos por usuário, ordenados do maior para o menor.
+ 
+SELECT u.nome, COUNT(e.usuario_id) AS total_emprestimos FROM usuarios AS u
+JOIN emprestimos AS e
+ON u.id = e.usuario_id
+GROUP BY u.nome, e.usuario_id
+ORDER BY total_emprestimos DESC;
